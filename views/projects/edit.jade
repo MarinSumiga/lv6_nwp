@@ -1,0 +1,27 @@
+extends ../layout
+
+block content
+  .card
+    h1 Edit Project
+    form(method='POST', action='/projects/' + project._id + '/update')
+      div
+        label(for='naziv') Name:
+        input(type='text', name='naziv', value=project.naziv, required=true)
+      div
+        label(for='opis') Description:
+        textarea(name='opis')= project.opis
+      div
+        label(for='cijena') Price:
+        input(type='number', name='cijena', value=project.cijena)
+      div
+        label(for='obavljeniPoslovi') Finished Works:
+        textarea(name='obavljeniPoslovi')= project.obavljeniPoslovi
+      div
+        label(for='datumPocetka') Start Date:
+        input(type='date', name='datumPocetka', value=project.datumPocetka ? project.datumPocetka.toISOString().substring(0, 10) : '')
+      div
+        label(for='datumZavrsetka') End Date:
+        input(type='date', name='datumZavrsetka', value=project.datumZavrsetka ? project.datumZavrsetka.toISOString().substring(0, 10) : '')
+      .form-actions
+        button.btn(type='submit') Update
+        a.btn.btn-secondary(href='/projects' style='margin-left: 10px;') Back to List

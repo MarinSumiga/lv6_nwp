@@ -1,0 +1,49 @@
+extends ../layout
+
+block content
+  .card
+    h1= project.naziv
+    div.project-details
+      p 
+        strong Description: 
+        | #{project.opis}
+      p 
+        strong Price: 
+        | #{project.cijena}
+      p 
+        strong Finished Works: 
+        | #{project.obavljeniPoslovi}
+      p 
+        strong Start Date: 
+        | #{project.datumPocetka ? project.datumPocetka.toDateString() : 'N/A'}
+      p 
+        strong End Date: 
+        | #{project.datumZavrsetka ? project.datumZavrsetka.toDateString() : 'N/A'}
+
+  .card
+    h2 Team Members
+    if project.teamMembers.length
+      ul.team-list
+        each member in project.teamMembers
+          li 
+            strong #{member.ime} 
+            | (#{member.uloga}) - #{member.email}
+    else
+      p No team members added.
+
+    h3 Add Team Member
+    form(method='POST', action='/projects/' + project._id + '/members')
+      div
+        label(for='ime') Name:
+        input(type='text', name='ime', required=true)
+      div
+        label(for='uloga') Role:
+        input(type='text', name='uloga')
+      div
+        label(for='email') Email:
+        input(type='email', name='email')
+      div
+        button.btn(type='submit') Add Member
+
+  div(style='margin-top: 20px;')
+    a.btn.btn-secondary(href='/projects') Back to List

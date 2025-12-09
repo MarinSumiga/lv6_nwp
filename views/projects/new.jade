@@ -1,0 +1,27 @@
+extends ../layout
+
+block content
+  .card
+    h1 Create New Project
+    form(method='POST', action='/projects')
+      div
+        label(for='naziv') Name:
+        input(type='text', name='naziv', required=true)
+      div
+        label(for='opis') Description:
+        textarea(name='opis')
+      div
+        label(for='cijena') Price:
+        input(type='number', name='cijena')
+      div
+        label(for='obavljeniPoslovi') Finished Works:
+        textarea(name='obavljeniPoslovi')
+      div
+        label(for='datumPocetka') Start Date:
+        input(type='date', name='datumPocetka')
+      div
+        label(for='datumZavrsetka') End Date:
+        input(type='date', name='datumZavrsetka')
+      .form-actions
+        button.btn(type='submit') Create
+        a.btn.btn-secondary(href='/projects' style='margin-left: 10px;') Back to List

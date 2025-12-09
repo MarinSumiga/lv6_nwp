@@ -1,0 +1,35 @@
+extends ../layout
+
+block content
+  .project-header
+    h1 Projects
+    a.btn(href='/projects/new') + Create New Project
+  
+  if projects.length
+    table
+      thead
+        tr
+          th Name
+          th Description
+          th Price
+          th Finished Works
+          th Start Date
+          th End Date
+          th Actions
+      tbody
+        each project in projects
+          tr
+            td= project.naziv
+            td= project.opis
+            td= project.cijena
+            td= project.obavljeniPoslovi
+            td= project.datumPocetka ? project.datumPocetka.toDateString() : ''
+            td= project.datumZavrsetka ? project.datumZavrsetka.toDateString() : ''
+            td
+              .project-actions
+                a.btn.btn-sm.btn-secondary(href='/projects/' + project._id) View
+                a.btn.btn-sm(href='/projects/' + project._id + '/edit') Edit
+                form(action='/projects/' + project._id + '/delete', method='POST' style='display:inline')
+                  button.btn.btn-sm.btn-danger(type='submit') Delete
+  else
+    p.empty-state No projects found.
