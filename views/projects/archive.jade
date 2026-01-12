@@ -2,9 +2,7 @@ extends ../layout
 
 block content
   .project-header
-    h1 All Projects
-    if user
-      a.btn(href='/projects/new') + Create New Project
+    h1 Archived Projects
   
   if projects.length
     .table-container
@@ -13,8 +11,7 @@ block content
           tr
             th Name
             th Description
-            th Price
-            th Finished Work
+            th Role
             th Start Date
             th End Date
             th Actions
@@ -23,12 +20,15 @@ block content
             tr
               td= project.name
               td= project.description
-              td= project.price
-              td= project.finishedWork
+              td
+                if project.leader && project.leader._id && project.leader._id.toString() === user.id
+                  span Leader
+                else
+                  span Member
               td= project.startDate ? project.startDate.toDateString() : ''
               td= project.endDate ? project.endDate.toDateString() : ''
               td
                 .project-actions
                   a.btn.btn-sm.btn-secondary(href='/projects/' + project._id) View
   else
-    p.empty-state No projects found.
+    p.empty-state No archived projects found.

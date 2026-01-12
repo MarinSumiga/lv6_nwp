@@ -10,6 +10,22 @@ html
           li
             a(href='/') Home
           li
-            a(href='/projects') Projects
+            a(href='/projects') All Projects
+          if user
+            li
+              a(href='/projects/my') My Projects
+            li
+              a(href='/projects/member') Member Projects
+            li
+              a(href='/projects/archive') Archive
+            li
+              span Welcome, #{user.name}
+            li
+              a(href='/users/logout') Logout
+          else
+            li
+              a(href='/users/login') Login
+            li
+              a(href='/users/register') Register
     .container
       block content

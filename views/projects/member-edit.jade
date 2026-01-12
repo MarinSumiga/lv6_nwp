@@ -3,8 +3,6 @@ extends ../layout
 block content
   .card
     h1= project.name
-    if project.archived
-      span.badge(style='background: #6b7280; color: white; padding: 4px 10px; border-radius: 4px; margin-left: 10px;') Archived
     div.project-details
       p 
         strong Description: 
@@ -12,9 +10,6 @@ block content
       p 
         strong Price: 
         | #{project.price}
-      p 
-        strong Finished Work: 
-        | #{project.finishedWork}
       p 
         strong Leader: 
         | #{project.leader ? (project.leader.ime || project.leader.email) : 'N/A'}
@@ -24,22 +19,23 @@ block content
       p 
         strong End Date: 
         | #{project.endDate ? project.endDate.toDateString() : 'N/A'}
-      p 
-        strong Archived: 
-        | #{project.archived ? 'Yes' : 'No'}
+
+  .card
+    h2 Update Finished Work
+    form(method='POST', action='/projects/' + project._id + '/member-update')
+      .form-group
+        label(for='finishedWork') Finished Work:
+        textarea(name='finishedWork', rows='5', style='width: 100%;')= project.finishedWork
+      .form-actions
+        button.btn(type='submit') Save
+        a.btn.btn-secondary(href='/projects/member' style='margin-left: 10px;') Back
 
   .card
     h2 Team Members
     if project.teamMembers.length
       ul.team-list
         each member in project.teamMembers
-          li(style='padding: 8px 0;')
-            strong #{member.ime || member.email} 
-            | (#{member.email})
+          li 
+            strong #{member.ime || member.email}
     else
-      p No team members added.
-
-  div(style='margin-top: 20px;')
-    a.btn.btn-secondary(href='/projects') Back to List
-    if isLeader
-      a.btn(href='/projects/' + project._id + '/edit' style='margin-left: 10px;') Edit Project
+      p No team members.

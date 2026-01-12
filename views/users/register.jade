@@ -1,0 +1,32 @@
+extends ../layout
+
+block content
+  .card
+    h1 Register
+    
+    if error
+      .alert.alert-error(style='color: red; background: #ffe6e6; padding: 10px; border-radius: 4px; margin-bottom: 20px;')
+        p= error
+    
+    form(action='/users/register', method='POST')
+      .form-group
+        label(for='ime') Name
+        input#ime(type='text', name='ime', placeholder='Your Name')
+      
+      .form-group
+        label(for='email') Email *
+        input#email(type='email', name='email', required, placeholder='email@example.com')
+      
+      .form-group
+        label(for='password') Password *
+        input#password(type='password', name='password', required, placeholder='Password')
+      
+      .form-group
+        label(for='confirmPassword') Confirm Password *
+        input#confirmPassword(type='password', name='confirmPassword', required, placeholder='Repeat Password')
+      
+      button.btn(type='submit') Register
+    
+    p(style='margin-top: 20px;')
+      | Already have an account? 
+      a(href='/users/login') Login here

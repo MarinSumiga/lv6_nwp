@@ -4,24 +4,56 @@ block content
   .card
     h1 Edit Project
     form(method='POST', action='/projects/' + project._id + '/update')
-      div
-        label(for='naziv') Name:
-        input(type='text', name='naziv', value=project.naziv, required=true)
-      div
-        label(for='opis') Description:
-        textarea(name='opis')= project.opis
-      div
-        label(for='cijena') Price:
-        input(type='number', name='cijena', value=project.cijena)
-      div
-        label(for='obavljeniPoslovi') Finished Works:
-        textarea(name='obavljeniPoslovi')= project.obavljeniPoslovi
-      div
-        label(for='datumPocetka') Start Date:
-        input(type='date', name='datumPocetka', value=project.datumPocetka ? project.datumPocetka.toISOString().substring(0, 10) : '')
-      div
-        label(for='datumZavrsetka') End Date:
-        input(type='date', name='datumZavrsetka', value=project.datumZavrsetka ? project.datumZavrsetka.toISOString().substring(0, 10) : '')
+      .form-group
+        label(for='name') Name:
+        input(type='text', name='name', value=project.name, required=true)
+      .form-group
+        label(for='description') Description:
+        textarea(name='description')= project.description
+      .form-group
+        label(for='price') Price:
+        input(type='number', name='price', value=project.price)
+      .form-group
+        label(for='finishedWork') Finished Work:
+        textarea(name='finishedWork')= project.finishedWork
+      .form-group
+        label(for='startDate') Start Date:
+        input(type='date', name='startDate', value=project.startDate ? project.startDate.toISOString().substring(0, 10) : '')
+      .form-group
+        label(for='endDate') End Date:
+        input(type='date', name='endDate', value=project.endDate ? project.endDate.toISOString().substring(0, 10) : '')
+      .form-group
+        label(for='archived')
+          input(type='checkbox', name='archived', checked=project.archived, style='margin-right: 8px;')
+          | Archived
       .form-actions
         button.btn(type='submit') Update
-        a.btn.btn-secondary(href='/projects' style='margin-left: 10px;') Back to List
+        a.btn.btn-secondary(href='/projects/' + project._id style='margin-left: 10px;') Cancel
+
+  .card
+    h2 Team Members
+    if project.teamMembers && project.teamMembers.length
+      ul.team-list
+        each member in project.teamMembers
+          li(style='display: flex; justify-content: space-between; align-items: center; padding: 8px 0;')
+            span
+              strong #{member.ime || member.email} 
+              | (#{member.email})
+            form(action='/projects/' + project._id + '/members/' + member._id + '/delete', method='POST', style='display:inline')
+              button.btn.btn-sm.btn-danger(type='submit') Remove
+    else
+      p No team members added.
+
+    h3 Add Team Member
+    form(method='POST', action='/projects/' + project._id + '/members')
+      .form-group
+        label(for='userId') Select User:
+        select(name='userId', required, style='width: 100%;')
+          option(value='') -- Select a user --
+          each u in users
+            - var isAlreadyMember = project.teamMembers && project.teamMembers.some(m => m._id.toString() === u._id.toString())
+            - var isLeaderUser = project.leader && u._id.toString() === project.leader._id.toString()
+            if !isAlreadyMember && !isLeaderUser
+              option(value=u._id)= u.ime || u.email
+      .form-group
+        button.btn(type='submit') Add Member

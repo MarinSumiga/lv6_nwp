@@ -2,26 +2,26 @@ extends ../layout
 
 block content
   .card
-    h1 Create New Project
+    h1 New Project
     form(method='POST', action='/projects')
-      div
-        label(for='naziv') Name:
-        input(type='text', name='naziv', required=true)
-      div
-        label(for='opis') Description:
-        textarea(name='opis')
-      div
-        label(for='cijena') Price:
-        input(type='number', name='cijena')
-      div
-        label(for='obavljeniPoslovi') Finished Works:
-        textarea(name='obavljeniPoslovi')
-      div
-        label(for='datumPocetka') Start Date:
-        input(type='date', name='datumPocetka')
-      div
-        label(for='datumZavrsetka') End Date:
-        input(type='date', name='datumZavrsetka')
+      .form-group
+        label(for='name') Name: *
+        input(type='text', name='name', required=true, placeholder='Project name')
+      .form-group
+        label(for='description') Description:
+        textarea(name='description', placeholder='Project description')
+      .form-group
+        label(for='price') Price:
+        input(type='number', name='price', placeholder='0')
+      .form-group
+        label(for='finishedWork') Finished Work:
+        textarea(name='finishedWork', placeholder='Work completed so far')
+      .form-group
+        label(for='startDate') Start Date:
+        input(type='date', name='startDate')
+      .form-group
+        label(for='endDate') End Date:
+        input(type='date', name='endDate')
       .form-actions
-        button.btn(type='submit') Create
-        a.btn.btn-secondary(href='/projects' style='margin-left: 10px;') Back to List
+        button.btn(type='submit') Create Project
+        a.btn.btn-secondary(href='/projects/my' style='margin-left: 10px;') Cancel

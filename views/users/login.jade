@@ -1,0 +1,28 @@
+extends ../layout
+
+block content
+  .card
+    h1 Login
+    
+    if success
+      .alert.alert-success(style='color: green; background: #e6fffa; padding: 10px; border-radius: 4px; margin-bottom: 20px;')
+        p= success
+    
+    if error
+      .alert.alert-error(style='color: red; background: #ffe6e6; padding: 10px; border-radius: 4px; margin-bottom: 20px;')
+        p= error
+    
+    form(action='/users/login', method='POST')
+      .form-group
+        label(for='email') Email
+        input#email(type='email', name='email', required, placeholder='email@example.com')
+      
+      .form-group
+        label(for='password') Password
+        input#password(type='password', name='password', required, placeholder='Password')
+      
+      button.btn(type='submit') Login
+    
+    p(style='margin-top: 20px;')
+      | Don't have an account? 
+      a(href='/users/register') Register here

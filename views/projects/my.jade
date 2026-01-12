@@ -2,9 +2,8 @@ extends ../layout
 
 block content
   .project-header
-    h1 All Projects
-    if user
-      a.btn(href='/projects/new') + Create New Project
+    h1 My Projects
+    a.btn(href='/projects/new') + Create New Project
   
   if projects.length
     .table-container
@@ -14,7 +13,6 @@ block content
             th Name
             th Description
             th Price
-            th Finished Work
             th Start Date
             th End Date
             th Actions
@@ -24,11 +22,13 @@ block content
               td= project.name
               td= project.description
               td= project.price
-              td= project.finishedWork
               td= project.startDate ? project.startDate.toDateString() : ''
               td= project.endDate ? project.endDate.toDateString() : ''
               td
                 .project-actions
                   a.btn.btn-sm.btn-secondary(href='/projects/' + project._id) View
+                  a.btn.btn-sm(href='/projects/' + project._id + '/edit') Edit
+                  form(action='/projects/' + project._id + '/delete', method='POST', style='display:inline')
+                    button.btn.btn-sm.btn-danger(type='submit') Delete
   else
-    p.empty-state No projects found.
+    p.empty-state No projects found. Create your first project!

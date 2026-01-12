@@ -1,5 +1,15 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  .card(style='text-align: center; padding: 4rem 2rem;')
+    h1 Welcome to #{title}
+    p(style='font-size: 1.2rem; color: #6b7280; margin-bottom: 2rem;') Manage your projects and teams efficiently and with style.
+    
+    if user
+      div(style='display: flex; gap: 1rem; justify-content: center;')
+        a.btn(href='/projects/my') My Projects
+        a.btn.btn-secondary(href='/projects') All Projects
+    else
+      div(style='display: flex; gap: 1rem; justify-content: center;')
+        a.btn(href='/users/login') Login
+        a.btn.btn-secondary(href='/users/register') Register
